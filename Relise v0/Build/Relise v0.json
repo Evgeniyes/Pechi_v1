@@ -1,0 +1,16 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Pechi",
+"productVersion": "0.1",
+"dataUrl": "Relise v0.data.unityweb",
+"wasmCodeUrl": "Relise v0.wasm.code.unityweb",
+"wasmFrameworkUrl": "Relise v0.wasm.framework.unityweb",
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"},
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.3.12f1"
+}
