@@ -11,7 +11,7 @@ public class CameraRotateAroundCenter : MonoBehaviour
     public float limit = 90; // ограничение вращения по Y
     public float zoom = 0.25f; // чувствительность при увеличении, колесиком мышки
     public float zoomMax = 3; // макс. увеличение
-    public float zoomMin = 0.75f; // мин. увеличение
+    public float zoomMin = 1; // мин. увеличение
     private float X, Y = 1.0f;
 
     bool moveCam = false; //Перемещать ли камеру
@@ -68,8 +68,8 @@ public class CameraRotateAroundCenter : MonoBehaviour
             Y += Input.GetAxis("Mouse Y") * sensitivity;
             Y = Mathf.Clamp(Y, -limit, -limitNiz);
             transform.localEulerAngles = new Vector3(-Y, X, 0);
-            print(transform.position);
-            print(transform.rotation);
+            //print(transform.position);
+            //print(transform.rotation);
         }
 
         transform.position = transform.localRotation * offset + target.position;

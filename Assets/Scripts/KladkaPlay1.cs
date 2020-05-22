@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KladkaPlay1 : MonoBehaviour
@@ -24,10 +25,51 @@ public class KladkaPlay1 : MonoBehaviour
             //Вызываем функцию падения нижнего ряда
             BuildLayerBrik();
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            //Вызываем функцию падения нижнего ряда
+            LayerBrikUp();
+        }
+    }
+
+    private void LayerBrikUp()
+    {
+        float maxY = 0; //для поискам макс Y для перемещения
+
+        // Находим все элементы которые были перемещены т.е. их Y меньше стартового значения
+        List<GameObject> layerUp = new List<GameObject>();
+        foreach (GameObject n in brikArray)
+        {
+            if (n.transform.position.y < n.GetComponent<BrickMove>().startHeightY)
+                layerUp.Add(n);
+            
+        }
+
+        foreach (GameObject bT in layerUp)  // Находим слой для перемещения
+        {
+            if (bT.transform.position.y > maxY)
+                maxY = bT.transform.position.y;
+        }
+
+        curY = maxY;
+        Vector3 newPosCam = PointForLookCam.transform.position;
+        newPosCam.y = Mathf.Max(0, newPosCam.y - 0.06f);
+        PointForLookCam.transform.position = newPosCam;
+
+        foreach (GameObject curYmin in brikArray)
+        {
+            if (curYmin.transform.position.y == maxY)
+            {
+                curYmin.GetComponent<BrickMove>().moveBrickToUp = true;
+                curYmin.GetComponent<BrickMove>().moveBrick = false;
+            }
+        }
+
+
     }
 
 
-    //Определяем слой для переноса
+    //Определяем слой для переноса вниз
     void BuildLayerBrik()
     {
         float minY = 10.0f; //для поискам мин Y для перемещения
@@ -54,6 +96,7 @@ public class KladkaPlay1 : MonoBehaviour
             {
                 //print(curYmin.name);
                 curYmin.GetComponent<BrickMove>().moveBrick = true;
+                curYmin.GetComponent<BrickMove>().moveBrickToUp = false;
 
                 //находим среднюю точку в слое
                 newPosPointCam += curYmin.transform.position;
