@@ -37,5 +37,8 @@ public class GameController : MonoBehaviour
         pauseBtn.SetActive(true);
     }
 
-
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
 }
