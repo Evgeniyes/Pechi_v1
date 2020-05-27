@@ -32,6 +32,9 @@ public class CameraRotateAroundCenter : MonoBehaviour
 
     void Update()
     {
+        if (GameController.gameControl.pauseGame)
+            return;
+
         MoveCam(limitNizBase);
 
     }

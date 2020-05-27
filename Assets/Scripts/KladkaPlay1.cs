@@ -20,6 +20,8 @@ public class KladkaPlay1 : MonoBehaviour
 
     void Update()
     {
+        /*
+
         if (Input.GetMouseButtonDown(0))
         {
             //Вызываем функцию падения нижнего ряда
@@ -29,11 +31,14 @@ public class KladkaPlay1 : MonoBehaviour
         {
             //Вызываем функцию падения нижнего ряда
             LayerBrikUp();
-        }
+        }*/
     }
 
-    private void LayerBrikUp()
+    public void LayerBrikUp()
     {
+        if (GameController.gameControl.pauseGame)
+            return;
+
         float maxY = 0; //для поискам макс Y для перемещения
 
         // Находим все элементы которые были перемещены т.е. их Y меньше стартового значения
@@ -70,8 +75,11 @@ public class KladkaPlay1 : MonoBehaviour
 
 
     //Определяем слой для переноса вниз
-    void BuildLayerBrik()
+    public void BuildLayerBrik()
     {
+        if (GameController.gameControl.pauseGame)
+            return;
+
         float minY = 10.0f; //для поискам мин Y для перемещения
         Vector3 newPosPointCam = Vector3.zero;
         int counterItem = 0;

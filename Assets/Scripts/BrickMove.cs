@@ -21,6 +21,9 @@ public class BrickMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameController.gameControl.pauseGame)
+            return;
+
         if (moveBrick)
         {
             //print("moveBrick= " + moveBrick + " | toPos= " + toPos);
