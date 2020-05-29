@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Brik
+  - Row
   layers:
   - Default
   - TransparentFX

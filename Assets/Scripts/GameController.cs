@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using MarkLight.Views.UI;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -12,14 +14,60 @@ public class GameController : MonoBehaviour
     public GameObject upBtn;
 
     public bool pauseGame = false;
-    
+
+    private GameObject[] brikArray;
+    private int currentRow = 0;
+    public Text descRowText;
+
 
     void Start()
     {
         gameControl = this;
         pausePanel.SetActive(false);
 
+        brikArray = GameObject.FindGameObjectsWithTag("Row");
+
+        foreach (GameObject g in brikArray)
+        {
+            g.SetActive(false);
+        }
+
+        AddRow(currentRow);
+
+
     }
+
+    private void AddRow(int indexRow)
+    {
+        if (indexRow < brikArray.Length)
+        {
+            brikArray[indexRow].SetActive(true);
+            brikArray[indexRow].transform.position = new Vector3(0, 5, 0);
+
+            descRowText.text = "Ряд: " + (indexRow+1) +". "+ brikArray[indexRow].GetComponent<AddRow>().description;
+            currentRow = Mathf.Min(++currentRow, brikArray.Length);
+            print("Текущий ряд для пермещения: " + currentRow);
+        }
+    }
+
+    private void RemoveRow()
+    {
+        currentRow = Mathf.Max(--currentRow, 0);
+        descRowText.text = "Ряд: " + (currentRow) + ". " + brikArray[Mathf.Max(currentRow-1, 0)].GetComponent<AddRow>().description;
+        brikArray[currentRow].SetActive(false);
+    }
+
+    public void AddBtn()
+    {
+        AddRow(currentRow);
+    }
+
+    public void RemoveBtn()
+    {
+        RemoveRow();
+    }
+
+
 
     void Update()
     {
@@ -55,4 +103,6 @@ public class GameController : MonoBehaviour
         pauseGame = true;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
+
+
 }
