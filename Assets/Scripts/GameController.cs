@@ -19,6 +19,9 @@ public class GameController : MonoBehaviour
     private int currentRow = 0;
     public Text descRowText;
 
+    public GameObject targetCameraPoint;
+    public float stepHeightPoint = 0.09f;
+
 
     void Start()
     {
@@ -46,7 +49,11 @@ public class GameController : MonoBehaviour
 
             descRowText.text = "Ряд: " + (indexRow+1) +". "+ brikArray[indexRow].GetComponent<AddRow>().description;
             currentRow = Mathf.Min(++currentRow, brikArray.Length);
-            print("Текущий ряд для пермещения: " + currentRow);
+            //перемещаем точку для камеры выше
+            
+            Vector3 pointCamPos = targetCameraPoint.transform.position;
+            pointCamPos.y += stepHeightPoint;
+            targetCameraPoint.transform.position = pointCamPos;
         }
     }
 
@@ -55,6 +62,13 @@ public class GameController : MonoBehaviour
         currentRow = Mathf.Max(--currentRow, 0);
         descRowText.text = "Ряд: " + (currentRow) + ". " + brikArray[Mathf.Max(currentRow-1, 0)].GetComponent<AddRow>().description;
         brikArray[currentRow].SetActive(false);
+
+        if (currentRow > 0)
+        {
+            Vector3 pointCamPos = targetCameraPoint.transform.position;
+            pointCamPos.y -= stepHeightPoint;
+            targetCameraPoint.transform.position = pointCamPos;
+        }
     }
 
     public void AddBtn()
